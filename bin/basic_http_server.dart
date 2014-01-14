@@ -10,7 +10,7 @@ void main() {
   var staticFiles = new VirtualDirectory(pathToBuild);
   staticFiles.allowDirectoryListing = true;
   staticFiles.directoryHandler = (dir, request) {
-    // Redirect directory-requests to index.html files.
+    // Redirect directory-requests to piratebadge.html file.
     var indexUri = new Uri.file(dir.path).resolve('piratebadge.html');
     staticFiles.serveFile(new File(indexUri.toFilePath()), request);
   };
