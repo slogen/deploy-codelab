@@ -1,4 +1,4 @@
-name: deploy-app-codelab
+name: deploy-codelab
 description: A sample deployment
 dependencies:
   browser: any

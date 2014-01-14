@@ -58,15 +58,6 @@ input[type="text"] {
 
 @media all and (max-width: 500px) {
   .badge {
-  border: 2px solid brown;
-  border-radius: 1em;
-  background: red;
-  font-size: 14pt;
-  width: 14em;
-  height: 7em;
-  text-align: center;
-  float: left;
-  margin-left: 0px;
-  white-space: nowrap;
-  overflow: hidden;
+    margin-left: 0px;
+  }
 }
