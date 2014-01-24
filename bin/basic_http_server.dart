@@ -4,7 +4,7 @@ import 'package:http_server/http_server.dart' show VirtualDirectory;
 import 'package:path/path.dart' show join, dirname;
 
 void main() {
-  // Assumes the server lives in bin/ and that `pub build` ran
+  // Assumes the server lives in bin/ and that `pub build` ran.
   var pathToBuild = join(dirname(Platform.script.toFilePath()), '..', 'build');
 
   var staticFiles = new VirtualDirectory(pathToBuild);
