@@ -34,9 +34,9 @@ void  main() {
   inputField.onInput.listen(updateBadge);
   genButton = querySelector('#generateButton');
   genButton.onClick.listen(generateBadge);
-  
+
   badgeNameElement = querySelector('#badgeName');
-  
+
   PirateName.readyThePirates()
     .then((_) {
       //on success
@@ -52,14 +52,16 @@ void  main() {
 
 void updateBadge(Event e) {
   String inputName = (e.target as InputElement).value;
-  
+
   setBadgeName(new PirateName(firstName: inputName));
   if (inputName.trim().isEmpty) {
-    genButton..disabled = false
-             ..text = 'Aye! Gimme a name!';
+    genButton
+        ..disabled = false
+        ..text = 'Aye! Gimme a name!';
   } else {
-    genButton..disabled = true
-             ..text = 'Arrr! Write yer name!';
+    genButton
+        ..disabled = true
+        ..text = 'Arrr! Write yer name!';
   }
 }
 
@@ -77,15 +79,10 @@ void setBadgeName(PirateName newName) {
 
 PirateName getBadgeNameFromStorage() {
   String storedName = window.localStorage[TREASURE_KEY];
-  if (storedName != null) {
-    return new PirateName.fromJSON(storedName);
-  } else {
-    return null;
-  }
+  return storedName != null ? new PirateName.fromJSON(storedName) : null;
 }
 
 class PirateName {
-  
   static final Random indexGen = new Random();
 
   static List<String> names = [];
@@ -93,19 +90,16 @@ class PirateName {
 
   String _firstName;
   String _appellation;
-  
+
   PirateName({String firstName, String appellation}) {
-    
-    if (firstName == null) {
-      _firstName = names[indexGen.nextInt(names.length)];
-    } else {
-      _firstName = firstName;
-    }
-    if (appellation == null) {
-      _appellation = appellations[indexGen.nextInt(appellations.length)];
-    } else {
-      _appellation = appellation;
-    }
+
+    _firstName = firstName == null ?
+        names[indexGen.nextInt(names.length)] :
+        firstName;
+
+    _appellation =  appellation == null ?
+        appellations[indexGen.nextInt(appellations.length)] :
+        appellation;
   }
 
   PirateName.fromJSON(String jsonString) {
@@ -120,12 +114,9 @@ class PirateName {
 
   String get pirateName => _firstName.isEmpty ? '' : '$_firstName the $_appellation';
 
-  static Future readyThePirates() {
-    String path = 'piratenames.json';
-    return HttpRequest.getString(path)
-        .then(_parsePirateNamesFromJSON);
-  }
-  
+  static Future readyThePirates() =>
+      HttpRequest.getString('piratenames.json').then(_parsePirateNamesFromJSON);
+
   static _parsePirateNamesFromJSON(String jsonString) {
     Map pirateNames = JSON.decode(jsonString);
     names = pirateNames['names'];

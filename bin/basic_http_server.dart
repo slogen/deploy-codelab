@@ -1,15 +1,15 @@
 import 'dart:io' show File, HttpServer, Platform;
 import 'dart:async' show runZoned;
 import 'package:http_server/http_server.dart' show VirtualDirectory;
-import 'package:path/path.dart' show join, dirname;
 
 void main() {
   // Assumes the server lives in bin/ and that `pub build` ran.
-  var pathToBuild = join(dirname(Platform.script.toFilePath()), '..', 'build');
+  var pathToBuild = Platform.script.resolve('../build');
 
-  var staticFiles = new VirtualDirectory(pathToBuild);
-  staticFiles.allowDirectoryListing = true;
-  staticFiles.directoryHandler = (dir, request) {
+  var staticFiles = new VirtualDirectory(pathToBuild.toFilePath());
+  staticFiles
+      ..allowDirectoryListing = true
+      ..directoryHandler = (dir, request) {
     // Redirect directory-requests to piratebadge.html file.
     var indexUri = new Uri.file(dir.path).resolve('piratebadge.html');
     staticFiles.serveFile(new File(indexUri.toFilePath()), request);
